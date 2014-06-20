@@ -1,0 +1,9 @@
+{
+  "assetPath": "http://apps.seattletimesdata.com/ceo-pay-2014/mugs/",
+  "s3": {
+    "stage": {
+      "bucket": "apps-stage.seattletimesdata.com",
+      "path": "ceo-pay-2014"
+    }
+  }
+}

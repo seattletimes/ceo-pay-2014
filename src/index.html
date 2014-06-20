@@ -1,0 +1,68 @@
+<style>
+<%= t.include("build/style.css") %>
+</style>
+<div id="ceoApp" ng-controller="ceoController" ng-cloak>
+  <div class="filters">
+    <div class="pill">
+    <%
+    var filters = [
+      {label: "All", data: "*"},
+      {label: "Men", data: "gender==M"},
+      {label: "Women", data: "gender==F"},
+      {label: "under 40", data: "age<40"},
+      {label: "40+", data: "age>=40"}
+    ];
+    filters.forEach(function(filter) { %>
+      <input type="radio" id="<%= filter.data %>" ng-model="filterExp" value="<%= filter.data %>">
+      <label for="<%= filter.data %>"><%= filter.label %></label>
+  <% }); %>
+    </div>
+    <i>Total CEOs matching filter: {{ (list | cull:filterExp).length }}</i>
+  </div>
+  <table class="ceo-pay">
+    <thead>
+      <tr>
+        <th class="col-image">
+        <th class="col-name" ng-click="sort('last_name')"> Name
+        <th class="col-company" ng-click="sort('company')"> Company
+        <th class="col-pay"  ng-click="sort('total')"> Pay
+    <tbody>
+      <tr ng-repeat="line in list | cull:filterExp">
+        <td class="col-image">
+          <img class="mug" ng-attr-src="<%= json.project.assetPath %>{{ line.mug || 'malephoto.png' }}">
+        <td class="col-name"> {{ line.first_name }} {{ line.last_name }}
+        <td class="col-company"> {{ line.company }}
+        <td class="col-pay">
+          <div class="total">Total: <b>{{ line.total | formatMoney }}</b></div>
+          <input class="trick" type="radio" id="{{ line.ticker }}" name="pay-check">
+          <label class="trick {{!line.equity || !line.other ? 'short' : ''}}" for="{{ line.ticker }}">
+            <span ng-show="line.cash" class="cash pay" ng-style="{width: '{{ line.cash / line.total * 100 }}%'}">
+              <div class="when-checked">
+                Cash: <b>{{ line.cash | formatMoney }} ({{ line.cash / line.total | formatPercent }})</b>
+              </div>
+            </span>
+            <span ng-show="line.equity" class="equity pay {{ line.other ? 'last' : ''}}" ng-style="{width: '{{ line.equity / line.total * 100 }}%' }">
+              <div class="when-checked">
+                Equity: <b>{{ line.equity | formatMoney }} ({{ line.equity / line.total | formatPercent }})</b>
+              </div>
+            </span>
+            <span ng-show="line.other" class="other pay" ng-style="{width: '{{ line.other / line.total * 100 }}%' }">
+              <div class="when-checked">
+                Other: <b>{{ line.other | formatMoney }} ({{ line.other / line.total | formatPercent }})</b>
+              </div>
+            </span>
+          </label>
+
+  </table>
+</div>
+
+<script>
+//load Data from the CSV file
+var ceoData = <%= JSON.stringify(csv.ceoPay) %>;
+</script>
+<!--
+<script src="app.js"></script>
+-->
+<script>
+<%= t.include("build/app.js") %>
+</script>

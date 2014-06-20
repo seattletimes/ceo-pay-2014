@@ -1,0 +1,262 @@
+@import "palette";
+
+[ng-cloak] {
+  display: none;
+}
+
+.filters {
+  font-family: arial, sans-serif;
+  padding: 16px 0;
+  font-size: 13px;
+
+  .pill {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  i {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  input[type=radio] {
+    display: none;
+
+    &:checked + label {
+      background: @gray;
+      color: white;
+      border-color: @gray;
+    }
+  }
+
+  label {
+    @curve: 8px;
+
+    display: block;
+    float: left;
+    padding: 4px 8px;
+    border-style: solid;
+    border-color: @gray;
+    border-width: 1px 1px 1px 0;
+    background: white;
+    color: @gray;
+    //border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    margin: 0;
+
+    &:first-of-type {
+      border-radius: @curve 0 0 @curve;
+      border-width: 1px;
+    }
+
+    &:last-of-type {
+      border-radius: 0 @curve @curve 0;
+      border-width: 1px 1px 1px 0;
+    }
+  }
+
+}
+
+.ceo-pay {
+
+  width: 650px;
+  font-family: arial, sans-serif;
+  font-size: 16px;
+
+  @cash: #009680;
+  @equity: #FBAF5D;
+  @other: #7664AC;
+  @border: lighten(@gray, 30%);
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .pay {
+    display: block;
+    float: left;
+    height: 1em;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+
+  border-collapse: collapse;
+
+  .cash {
+    background: @cash;
+  }
+
+  .equity {
+    background: @equity;
+  }
+
+  .other {
+    background: @other;
+  }
+
+  tr {
+    border-top: 1px solid @border;
+    background: white;
+
+    &:nth-child(2n) {
+      background: darken(white, 3%);
+    }
+  }
+
+  th {
+    text-align: left;
+    padding: 4px 8px;
+    background: @dark-gray;
+    background: linear-gradient(to bottom, @slate, @dark-gray);
+    color: white;
+
+    &[ng-click] {
+      cursor: pointer;
+    }
+  }
+
+  td {
+    vertical-align: middle;
+    padding: 4px 8px;
+    border: 1px solid @border;
+  }
+
+  input.trick {
+    display: none;
+    @hidden-height: 100px;
+
+    &:checked + label {
+      padding-bottom: @hidden-height;
+
+      span.pay {
+        overflow: visible;
+      }
+
+      &.short {
+        padding-bottom: 70px;
+      }
+
+      .when-checked {
+        opacity: 1;
+        height: auto;
+      }
+    }
+  }
+
+  label.trick {
+    display: block;
+    transition: padding .2s linear;
+    position: relative;
+    cursor: pointer;
+
+    span.pay {
+      overflow: hidden;
+    }
+
+    .when-checked {
+      position: absolute;
+      top: 30px;
+      opacity: 0;
+      height: 0;
+      padding: 4px;
+      transition: opacity .2s linear;
+      background: white;
+      border-width: 2px;
+      border-radius: 2px;
+      border-style: solid;
+      z-index: 99999;
+      box-shadow: 4px 4px 12px rgba(0, 0, 0, .1);
+
+      @tip: 6px;
+
+      &::before {
+        position: absolute;
+        top: -(@tip * 2);
+        left: 0px;
+        content: "";
+        border-color: transparent transparent @equity @equity;
+        border-width: @tip 4px;
+        border-style: solid;
+        height: 0px;
+        width: 0px;
+      }
+    }
+
+    .cash .when-checked {
+      right: 0;
+      text-align: right;
+      border-color: @cash;
+
+      &::before {
+        right: 0px;
+        left: auto;
+        border-color: transparent @cash @cash transparent;
+      }
+    }
+
+    .equity {
+      .when-checked {
+        border-color: @equity;
+      }
+
+      &.last .when-checked {
+        top: 70px;
+        &::before {
+          top: -54px;
+          border-width: 27px 4px;
+        }
+      }
+    }
+
+    .other .when-checked {
+      border-color: @other;
+
+      &::before {
+        border-color: transparent transparent @other @other;
+      }
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+
+      li {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        line-height: 25px;
+
+        b {
+          color: white;
+          padding: 0 4px;
+        }
+      }
+    }
+  }
+
+  .mug {
+    width: 50px;
+    height: 70px;
+  }
+
+  .col-image {
+    width: 70px;
+    text-align: center;
+  }
+
+  .col-name {
+    font-weight: bold;
+  }
+
+  .col-pay {
+    width: 200px;
+    white-space: nowrap;
+    text-align: center;
+
+    .total {
+      margin-bottom: 6px;
+    }
+  }
+}
