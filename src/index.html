@@ -23,9 +23,9 @@
     <thead>
       <tr>
         <th class="col-image">
-        <th class="col-name" ng-click="sort('last_name')"> Name
-        <th class="col-company" ng-click="sort('company')"> Company
-        <th class="col-pay"  ng-click="sort('total')"> Pay
+        <th class="col-name" ng-click="sort('last_name')" sort-arrow="last_name"> Name
+        <th class="col-company" ng-click="sort('company')" sort-arrow="company"> Company
+        <th class="col-pay"  ng-click="sort('total')" sort-arrow="total"> Pay
     <tbody>
       <tr ng-repeat="line in list | cull:filterExp">
         <td class="col-image">
@@ -38,17 +38,23 @@
           <label class="trick {{!line.equity || !line.other ? 'short' : ''}}" for="{{ line.ticker }}">
             <span ng-show="line.cash" class="cash pay" ng-style="{width: '{{ line.cash / line.total * 100 }}%'}">
               <div class="when-checked">
-                Cash: <b>{{ line.cash | formatMoney }} ({{ line.cash / line.total | formatPercent }})</b>
+                Cash:
+                  <b>{{ line.cash | formatMoney }}</b>
+                  <span class="percent">{{ line.cash / line.total | formatPercent }}</span>
               </div>
             </span>
             <span ng-show="line.equity" class="equity pay {{ line.other ? 'last' : ''}}" ng-style="{width: '{{ line.equity / line.total * 100 }}%' }">
               <div class="when-checked">
-                Equity: <b>{{ line.equity | formatMoney }} ({{ line.equity / line.total | formatPercent }})</b>
+                Equity:
+                  <b>{{ line.equity | formatMoney }}</b>
+                  <span class="percent">{{ line.equity / line.total | formatPercent }}</span>
               </div>
             </span>
             <span ng-show="line.other" class="other pay" ng-style="{width: '{{ line.other / line.total * 100 }}%' }">
               <div class="when-checked">
-                Other: <b>{{ line.other | formatMoney }} ({{ line.other / line.total | formatPercent }})</b>
+                Other:
+                  <b>{{ line.other | formatMoney }}</b>
+                  <span class="percent">{{ line.other / line.total | formatPercent }}</span>
               </div>
             </span>
           </label>

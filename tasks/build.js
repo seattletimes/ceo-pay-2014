@@ -35,7 +35,7 @@ module.exports = function(grunt) {
       var src = file.src.shift();
       var input = grunt.file.read(src);
       var output = grunt.template.process(input, { data: data });
-      grunt.file.write(file.dest, output);
+      grunt.file.write(file.dest, output, { encoding: "iso-8859-1" });
     });
   });
 

@@ -13,10 +13,10 @@ require([
         if (!d[key]) d[key] = 0;
       }
       return d;
-    });
+    }).sort(function(a, b) { return b.total - a.total });
 
-    $scope.sortDescending = false;
-    $scope.lastSort = "company";
+    $scope.sortDescending = true;
+    $scope.lastSort = "total";
 
     $scope.sort = function(key) {
       qsa(".ceo-pay input:checked").forEach(function(e) { e.checked = false });
@@ -42,6 +42,28 @@ require([
     $scope.filterExp = "*";
 
   }]);
+
+  app.directive("sortArrow", function() {
+    return {
+      restrict: "A",
+      link: function(scope, element, attrs) {
+        var column = attrs.sortArrow;
+        var onSort = function(after, before, $scope) {
+          var on = $scope.lastSort;
+          element.removeClass("sorted up");
+          if (on == column) {
+            element.addClass("sorted");
+            if (!$scope.sortDescending) {
+              element.addClass("up");
+            }
+          }
+        };
+        scope.$watch("lastSort", onSort);
+        scope.$watch("sortDescending", onSort);
+
+      }
+    }
+  })
 
   angular.bootstrap(document.querySelector("#ceoApp"), ["ceoPay"]);
 

@@ -45,5 +45,5 @@ define([
       var fn = new Function("key", "value", "item", "return item[key] " + op + value);
       return list.filter(fn.bind(null, key, value));
     }
-  })
-})
+  });
+});

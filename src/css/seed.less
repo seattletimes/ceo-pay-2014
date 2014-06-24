@@ -60,13 +60,15 @@
 
 .ceo-pay {
 
-  width: 650px;
+  width: 630px;
   font-family: arial, sans-serif;
   font-size: 16px;
 
-  @cash: #009680;
-  @equity: #FBAF5D;
-  @other: #7664AC;
+  @cash: #0B486B; //#009680;
+  @equity: #79BD9A; //#FBAF5D;
+  //@other: desaturate(darken(#CFF09E, 20%), 30%); //#7664AC;
+  //@other: #CFF09E;
+  @other: darken(#C9DF8A, 10%);
   @border: lighten(@gray, 30%);
 
   * {
@@ -111,9 +113,25 @@
     background: @dark-gray;
     background: linear-gradient(to bottom, @slate, @dark-gray);
     color: white;
+    text-transform: uppercase;
+    font-size: 14px;
 
     &[ng-click] {
       cursor: pointer;
+    }
+
+    &.sort {
+      cursor: pointer;
+    }
+
+    &.sorted {
+      &::after {
+        content: "\25BC";
+      }
+
+      &.up::after {
+        content: "\25B2";
+      }
     }
   }
 
@@ -160,7 +178,7 @@
       top: 30px;
       opacity: 0;
       height: 0;
-      padding: 4px;
+      padding: 5px;
       transition: opacity .2s linear;
       background: white;
       border-width: 2px;
@@ -168,6 +186,16 @@
       border-style: solid;
       z-index: 99999;
       box-shadow: 4px 4px 12px rgba(0, 0, 0, .1);
+
+      .percent {
+        background: #555;
+        color: white;
+        padding: 4px;
+        border-radius: 4px;
+        font-size: 14px;
+        display: inline-block;
+        vertical-align: baseline;
+      }
 
       @tip: 6px;
 
@@ -189,6 +217,10 @@
       text-align: right;
       border-color: @cash;
 
+      .percent {
+        background: darken(@cash, 5%);
+      }
+
       &::before {
         right: 0px;
         left: auto;
@@ -199,6 +231,10 @@
     .equity {
       .when-checked {
         border-color: @equity;
+
+        .percent {
+          background: darken(@equity, 30%);
+        }
       }
 
       &.last .when-checked {
@@ -212,6 +248,10 @@
 
     .other .when-checked {
       border-color: @other;
+
+      .percent {
+        background: darken(@other, 25%);
+      }
 
       &::before {
         border-color: transparent transparent @other @other;
@@ -253,7 +293,7 @@
   .col-pay {
     width: 200px;
     white-space: nowrap;
-    text-align: center;
+    text-align: left;
 
     .total {
       margin-bottom: 6px;
